@@ -1,2 +1,226 @@
 # Google App Engine generated folder
 appengine-generated/
+
+<?php
+$dbserver="localhost";
+$dbusername="root";
+$dbpass="";
+$dbname="vikasana";
+$conn=mysqli_connect($dbserver,$dbusername,$dbpass,$dbname);
+?>
+
+
+<html>
+    <head>
+        <title>MODERATOR ACCEPT</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h2{
+            padding-left: 300px;
+            padding-top: 10px;
+        }
+        
+		
+		.mod{
+			color:#003366;
+			font-size:30px;
+			font-family:Comic Sans Ms;
+		}
+    </style>
+	
+	
+	
+	<script>
+				function myFunction(x)
+					{
+						//alert('Huuuuuuuuuuuuu');
+						//alert(x);
+						remove(x)
+						xhr=new XMLHttpRequest();
+						xhr.onreadystatechange=success;
+						xhr.open('POST','accepted.php',true);
+						xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+						xhr.send("x="+x);    
+					}
+				function success(){
+						if(xhr.readyState==4 && xhr.status==200){
+							var res = xhr.responseText;
+							alert(res);
+							//x.innerHTML += '<br>'+res;
+							//var x = document.getElementById(res);
+							//alert(x);
+							//x.style.display = "none";
+							
+						}	
+						
+						
+					}
+				function remove(x)
+				{
+					document.getElementById(''+x).style.display = "none";
+				}
+				
+</script>
+
+</head>
+        <body background="simple.jpeg">
+            <marquee scrollamount="10"> <h2> MODERATOR PAGE</h2></marquee> 
+           
+<div class="mod">	
+
+
+
+     
+
+<?php
+
+$sql="select * from trial ;";
+$result=mysqli_query($conn,$sql);
+
+$resultcheck=mysqli_num_rows($result);
+
+if($resultcheck>0){
+	while($row=mysqli_fetch_assoc($result)){
+		//echo "<form action='me.php'>";
+//Name: <input type="text" name="name"><br>
+//E-mail: <input type="text" name="email"><br>
+            $dbserver="localhost";
+			$dbusername="root";
+			$dbpass="";
+			$dbname="vikasana";
+			$conn=mysqli_connect($dbserver,$dbusername,$dbpass,$dbname);
+			echo "<div id=".$row['id'].">";
+				echo "<p> id : $row[id] </p>";
+				echo "<p> Email : $row[email] </p>";
+				echo "<p> Name : $row[name] </p>";
+				echo "<p> Category : $row[category] </p>";
+				echo "<p> Description : $row[description] </p>";
+				echo "<div id='img_div'>";
+				echo "<img src='$row[image]' >";
+				echo "</div>";
+				echo "<br>";
+				echo "</div>";
+				/*echo "<form method='POST'>";
+				echo "<input type='hidden' name='id' value='$row[id]' />";
+				echo "<input type='hidden' name='email' value='$row[email]' />";
+			/*	echo "<input type='hidden' name='id' value='$row[id]' />";
+				echo "<input type='hidden' name='id' value='$row[id]' />";
+				echo "<input type='hidden' name='id' value='$row[id]' />";
+				echo "<input type='hidden' name='id' value='$row[id]' />";*/
+				echo "<button onclick='myFunction($row[id])'>Click me to Accept!</button>"; 
+				echo "<br>";
+				echo "<br>";
+				echo "****************************************************************************";
+				//echo "</form>";
+				//echo "</div>";
+				//echo "</div>";
+				//echo "</div>";
+			?>
+			
+				
+<?php
+		/*		
+			echo "</div>";
+			echo "<form method='POST' action='<?php add_to_db($)?>' enctype='multipart/form-data'>";
+
+	     echo "id : ";
+		echo "$row[id]<br>";
+		echo "email : ";
+		echo "$row[email]<br>";	
+		echo "Name : ";
+		echo "$row[name]<br>";
+        echo "Category : ";
+         echo "$row[category]<br>";	
+		 echo "Description : ";
+        echo "$row[description]<br>";
+		echo "image : ";
+         echo "$row[image]<br>";
+		echo "<div id='img_div'>";
+      	echo "<img src='$row[image]' >";
+      	//echo "<img src='1.jpg'>";
+		echo "<br>";
+		echo "<br>";
+		 
+
+	
+ 
+ echo "<input type='submit' value='accept' name='accept' >";
+  echo "</form>";*/
+ 
+ // echo "<input type='submit' value='decline' name='decline'>";
+//		echo "<input type='button' name='a_submit' value='ACCEPT'>";
+	//echo "<input type='button' name='d_submit' value='DECLINE'>";
+	}
+}
+
+function myFunction($row) {
+   echo "<script>alert(Hey <?php $row ?> is clicked)</script>";
+}	
+
+
+/*
+		if(isset($_POST['accept'])){ echo "<script>alert('Yes its clicked')</script>";
+			$dbserver="localhost";
+$dbusername="root";
+$dbpass="";
+$dbname="vikasana";
+$conn=mysqli_connect($dbserver,$dbusername,$dbpass,$dbname);
+if(!$conn)
+	echo "connection failed!";
+else{   
+echo "connection done";
+
+
+//$resultcheck=mysqli_num_rows($result);
+
+//if($resultcheck>0){
+	if($row=mysqli_fetch_assoc($result)){
+		//$a=$_POST['email'];
+		$a=$row['name'];
+		$a='email';
+		echo $row['name'];
+		//echo $a;
+		echo "hi";
+		$b=$row['email'];
+		echo $row['email'];
+		$c=$row['category'];
+		echo $row['category'];
+		$e=$row['description'];
+		echo $row['description'];
+		
+$image = $_FILES['image']['name'];
+$target = "C:wamp64/www/".basename($image);
+		$q="insert into accept1 (email,name,category,description,image) values ('$a','$b','$c','$e','$image')";
+	
+  	mysqli_query($conn, $q);
+
+  	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+  		$msg = "Image uploaded successfully";
+  	}else{
+  		$msg = "Failed to upload image";	
+			
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+
+	
+	}
+	}
+//}
+		
+		
+}
+		
+	}
+
+
+*/
+?>
+			
+	</div>	
+</body>
+</html>
+
+
